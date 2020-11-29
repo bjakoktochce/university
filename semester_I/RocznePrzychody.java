@@ -4,6 +4,8 @@
  * Bartosz Jakoktochce 
  */
 
+package semester_I;
+
 import java.util.*;
 
 public class RocznePrzychody {

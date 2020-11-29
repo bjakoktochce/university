@@ -5,6 +5,8 @@
  * 
  */
 
+package semester_I;
+
 import java.util.*;
 
 public class RocznePrzychodyRazJeszcze {

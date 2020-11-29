@@ -2,7 +2,9 @@
  * 1.1 Przeliczanie jednostek odległości
  * 
  * Bartosz Jakoktochce 
- */ 
+ */
+
+package semester_I;
 
 import java.util.*;
 
@@ -19,13 +21,13 @@ public class LengthCalculator {
 
         do {
             System.out.print("\nValue in [meters] to be calculated (0 to quit): ");
-            
-            meters = reader.nextDouble();      
-            reader.nextLine();    
-            if (meters < 0) System.out.println("ERROR: The value can not be negative.");   
-        }
-        while (meters < 0);
-        
+
+            meters = reader.nextDouble();
+            reader.nextLine();
+            if (meters < 0)
+                System.out.println("ERROR: The value can not be negative.");
+        } while (meters < 0);
+
         return meters;
     }
 
@@ -48,7 +50,7 @@ public class LengthCalculator {
 
         while (true) {
             length = getMeters();
-        
+
             // if user put 0 we're exitting the program
             if (length == 0) {
                 System.out.println("Thank you for using this program.");

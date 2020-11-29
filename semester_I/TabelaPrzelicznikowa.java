@@ -2,7 +2,9 @@
  * 1.2 Tabela przelicznikowa odległości
  * 
  * Bartosz Jakoktochce 
- */ 
+ */
+
+package semester_I;
 
 import java.util.*;
 
@@ -19,12 +21,12 @@ public class TabelaPrzelicznikowa {
 
         do {
             System.out.print(prompt);
-            
-            initialValue = reader.nextDouble();      
-            reader.nextLine();    
-            if (initialValue < 0) System.out.println("ERROR: The value can not be negative.");   
-        }
-        while (initialValue < 0);
+
+            initialValue = reader.nextDouble();
+            reader.nextLine();
+            if (initialValue < 0)
+                System.out.println("ERROR: The value can not be negative.");
+        } while (initialValue < 0);
 
         return initialValue;
     }
@@ -46,20 +48,21 @@ public class TabelaPrzelicznikowa {
         stepValue = getValue("Please enter step value: ");
 
         // the step value could not be equal zero as this won't be a table of values
-        if (stepValue == 0)  {
+        if (stepValue == 0) {
             System.out.println("ERROR: Step value must be greater than: 0!");
-        }
-        else {
+        } else {
 
             int rows = 0;
-            
-            for (length = initialValue; length <=finalValue; length+=stepValue) {
-                System.out.printf(length + "[m] is equal to: %.4f[inches],  %.4f[feet], %.4f[yards],  %.4f[miles]\n ", recalculate(length, toInches), recalculate(length, toFeet), recalculate(length, toYards), recalculate(length, toMiles) );
-               
+
+            for (length = initialValue; length <= finalValue; length += stepValue) {
+                System.out.printf(length + "[m] is equal to: %.4f[inches],  %.4f[feet], %.4f[yards],  %.4f[miles]\n ",
+                        recalculate(length, toInches), recalculate(length, toFeet), recalculate(length, toYards),
+                        recalculate(length, toMiles));
+
                 rows++;
 
                 // if there're many rows just pause listing after 24 rows
-                if(rows == 24) {
+                if (rows == 24) {
                     System.out.println("Press enter to continue.");
                     reader.nextLine();
                     rows = 0;
