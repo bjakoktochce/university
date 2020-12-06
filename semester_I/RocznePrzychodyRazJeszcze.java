@@ -2,7 +2,6 @@
  * 2.1 Roczne przychody raz jeszcze
  * 
  * Bartosz Jakoktochce 
- * 
  */
 
 package semester_I;

@@ -3,6 +3,7 @@
  * 
  * Bartosz Jakoktochce 
  */
+
 package semester_I;
 
 public class FunkcjaKwadratowa {
