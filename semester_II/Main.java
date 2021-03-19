@@ -1,3 +1,7 @@
+/*
+ * Bartosz B.Jakoktochce
+ */
+
 import java.util.*;
 
 public class Main {
@@ -59,12 +63,16 @@ public class Main {
                 String grupa = reader.nextLine();
                 student.setGrupa(grupa);
 
-                uczelnia.dodajStudenta(student);
+                if (uczelnia.dodajStudenta(student) == -1) {
+                    System.out.println("Error: Brak miejsca by dodac studenta! Usun studenta i ponow probe.");
+                }
+
+                System.out.println();
                 break;
 
             case 2:
                 System.out.print("Podaj numer studenta :# ");
-                reader.nextInt();
+                nrStudenta = reader.nextInt();
 
                 if (uczelnia.odczytajStudenta(nrStudenta) == null) {
                     System.out.println("Error: Brak studentna o podanym numerze!");
@@ -72,16 +80,21 @@ public class Main {
                     break;
                 }
 
-                System.out.println("Wpisujesz oceny studentowu: " + uczelnia.odczytajStudenta(nrStudenta).getImie() + uczelnia.odczytajStudenta(nrStudenta).getNazwisko());
+                System.out.println("Wpisujesz oceny studentowu: " + uczelnia.odczytajStudenta(nrStudenta).getImie()
+                        + " " + uczelnia.odczytajStudenta(nrStudenta).getNazwisko());
 
-                for (int i = 0;i < 5; i++) {
+                for (int i = 0; i < 5; i++) {
                     System.out.print("Podaj ocene do dodania :# ");
 
                     double ocena = reader.nextInt();
-
-                    uczelnia.odczytajStudenta(nrStudenta).dodajOcene(ocena);
+                    if (uczelnia.odczytajStudenta(nrStudenta).dodajOcene(ocena) == -1) {
+                        System.out.println("Error: Brak miejsca na wprowadzenie oceny!");
+                        System.out.println();
+                        break;
+                    }
                 }
 
+                System.out.println();
                 break;
 
             case 3:
@@ -94,11 +107,12 @@ public class Main {
                     break;
                 }
 
-                System.out.println("STUDENT: " + uczelnia.odczytajStudenta(nrStudenta).getNazwisko() + " " + uczelnia.odczytajStudenta(nrStudenta).getImie() + " grupa:  "
+                System.out.println("STUDENT: " + uczelnia.odczytajStudenta(nrStudenta).getNazwisko() + " "
+                        + uczelnia.odczytajStudenta(nrStudenta).getImie() + " grupa:  "
                         + uczelnia.odczytajStudenta(nrStudenta).getGrupa());
 
                 System.out.print("LISTA OCEN: ");
-                for (int i = 0;i <5; i++)
+                for (int i = 0; i < 5; i++)
                     System.out.print(uczelnia.odczytajStudenta(nrStudenta).odczytajOcene(i) + " ");
 
                 System.out.println("SREDNIA OCEN: " + uczelnia.odczytajStudenta(nrStudenta).sredniaOcen());
@@ -115,7 +129,6 @@ public class Main {
                 else
                     System.out.println(" Nie przysluguje");
 
-
                 System.out.println();
                 break;
 
@@ -123,11 +136,22 @@ public class Main {
                 System.out.print("Podaj numer studenta :# ");
                 nrStudenta = reader.nextInt();
 
+                /*
                 if (uczelnia.odczytajStudenta(nrStudenta) == null) {
                     System.out.println("Error: Brak studentna o podanym numerze!");
                     System.out.println();
                     break;
                 }
+*               */
+                if (uczelnia.usunStudenta(nrStudenta) != 0 ) {
+                    System.out.println("Error: Brak studentna o podanym numerze!");
+                    System.out.println();
+                    break;
+                }
+
+                System.out.println("Usunieto studenta nr: " + nrStudenta);
+                System.out.println();
+
                 break;
 
             case 5:
@@ -162,12 +186,22 @@ public class Main {
 
                 case 1:
                     System.out.println("*** LISTA WSZYSTKICH STUDENTOW ***");
+
+                    for (Student s : uczelnia.listaStudentow()) {
+                        if (s != null)
+                            System.out.println(i + " : " + s.getImie() + " " + s.getNazwisko() + ", grupa: " + s.getGrupa());
+                        i++;
+                    }
+
+                    /*
                     while (uczelnia.odczytajStudenta(i) != null) {
                         System.out.println(i + " : " + uczelnia.odczytajStudenta(i).getImie() + " "
                                 + uczelnia.odczytajStudenta(i).getNazwisko() + ", grupa: "
                                 + uczelnia.odczytajStudenta(i).getGrupa());
                         i++;
                     }
+                    */
+
                     System.out.println();
                     break;
 
@@ -178,53 +212,44 @@ public class Main {
 
                     System.out.println("*** LISTA STUDENTOW Z GRUPY: " + grupa + " ***");
 
-                    while (uczelnia.odczytajStudenta(i) != null) {
-                        if (uczelnia.odczytajStudenta(i).getGrupa().contentEquals(grupa)) {
-                            System.out.println(i + " : " + uczelnia.odczytajStudenta(i).getImie() + " "
-                                    + uczelnia.odczytajStudenta(i).getNazwisko() + ", grupa: "
-                                    + uczelnia.odczytajStudenta(i).getGrupa());
-                        }
-                        i++;
+                    for (Student s : uczelnia.grupa(grupa)) {
+                        if (s != null)
+                            System.out.println(s.getImie() + " " + s.getNazwisko() + ", grupa:  " + s.getGrupa());
                     }
+
                     System.out.println();
                     break;
 
                 case 3:
                     System.out.println("*** LISTA STUDENTOW, KTORZY ZALICZYLI SESJE ***");
-                    while (uczelnia.odczytajStudenta(i) != null) {
-                        if (uczelnia.odczytajStudenta(i).zaliczonaSesja()) {
-                            System.out.println(i + " : " + uczelnia.odczytajStudenta(i).getImie() + " "
-                                    + uczelnia.odczytajStudenta(i).getNazwisko() + ", grupa: "
-                                    + uczelnia.odczytajStudenta(i).getGrupa());
-                        }
-                        i++;
+
+                    for (Student s : uczelnia.zaliczyliSesje()) {
+                        if (s != null)
+                            System.out.println(s.getImie() + " " + s.getNazwisko() + ", grupa:  " + s.getGrupa());
                     }
+
                     System.out.println();
                     break;
 
                 case 4:
                     System.out.println("*** LISTA STUDENTOW, KTORZY NIE ZALICZYLI SESJI ***");
-                    while (uczelnia.odczytajStudenta(i) != null) {
-                        if (!uczelnia.odczytajStudenta(i).zaliczonaSesja()) {
-                            System.out.println(i + " : " + uczelnia.odczytajStudenta(i).getImie() + " "
-                                    + uczelnia.odczytajStudenta(i).getNazwisko() + ", grupa: "
-                                    + uczelnia.odczytajStudenta(i).getGrupa());
-                        }
-                        i++;
+
+                    for (Student s : uczelnia.nieZaliczyliSesji()) {
+                        if (s != null)
+                            System.out.println(s.getImie() + " " + s.getNazwisko() + ", grupa:  " + s.getGrupa());
                     }
+
                     System.out.println();
                     break;
 
                 case 5:
                     System.out.println("*** LISTA STUDENTOW, KTORYM PRZYSLUGUJE STYPENDIUM ***");
-                    while (uczelnia.odczytajStudenta(i) != null) {
-                        if (uczelnia.odczytajStudenta(i).stypendium()) {
-                            System.out.println(i + " : " + uczelnia.odczytajStudenta(i).getImie() + " "
-                                    + uczelnia.odczytajStudenta(i).getNazwisko() + ", grupa: "
-                                    + uczelnia.odczytajStudenta(i).getGrupa() + " srednia ocen: " + uczelnia.odczytajStudenta(i).sredniaOcen());
-                        }
-                        i++;
+
+                    for (Student s : uczelnia.stypendia()) {
+                        if (s != null)
+                            System.out.println(s.getImie() + " " + s.getNazwisko() + ", grupa:  " + s.getGrupa());
                     }
+
                     System.out.println();
                     break;
                 }

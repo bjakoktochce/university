@@ -1,3 +1,7 @@
+/*
+ * Bartosz B.Jakoktochce
+ */
+
 public class Student {
 
     private String imie, nazwisko, grupa;
@@ -10,16 +14,19 @@ public class Student {
         this.oceny = new double[5];
     }
 
-    int dodajOcene(double ocena) {
+    public int dodajOcene(double ocena) {
+        //for (int i = 0; i < this.oceny.length; i++)
+        //    if (this.oceny[i] != 0) return -1;
+
         for (int i = 0; i < this.oceny.length; i++)
             if (this.oceny[i] == 0) {
                 this.oceny[i] = ocena;
-                break;
+                return 1;
             }
-        return 0;
+        return -1;
     }
 
-    double odczytajOcene(int nrOceny) {
+    public double odczytajOcene(int nrOceny) {
         if (nrOceny >= this.oceny.length) {
             return -1;
         }
@@ -31,7 +38,7 @@ public class Student {
         return oceny[nrOceny];
     }
 
-    double sredniaOcen() {
+    public double sredniaOcen() {
         double sumaOcen = 0;
 
         for (int i = 0; i < this.oceny.length; i++) {
@@ -40,7 +47,7 @@ public class Student {
         return sumaOcen / oceny.length;
     }
 
-    boolean zaliczonaSesja() {
+    public boolean zaliczonaSesja() {
         for (int i = 0; i < this.oceny.length; i++) {
             if (oceny[i] <= 2)
                 return false;
@@ -48,8 +55,8 @@ public class Student {
         return true;
     }
 
-    boolean stypendium() {
-        if (zaliczonaSesja() == true && sredniaOcen() >= 4.5) {
+    public boolean stypendium() {
+        if (zaliczonaSesja() == true && sredniaOcen() > 4.5) {
             return true;
         }
         return false;
@@ -59,12 +66,12 @@ public class Student {
         this.imie = imie;
     }
 
-    public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
-    }
-
     public String getImie() {
         return this.imie;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
     }
 
     public String getNazwisko() {
